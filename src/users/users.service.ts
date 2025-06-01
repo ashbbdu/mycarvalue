@@ -10,21 +10,21 @@ export class UsersService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
   ) {}
-  createUser(data: CreateUserDto) {
+  async createUser(data: CreateUserDto) {
     const { firstName, lastName, email, password } = data;
-    const user = this.userRepository.create({
+    const user = await this.userRepository.create({
       firstName,
       lastName,
       email,
       password,
     });
-    return this.userRepository.save(user);
+    return await this.userRepository.save(user);
   }
   async findUsers(email: string) {
     return await this.userRepository.find({ where: { email: email } });
   }
-  getAllUsers() {
-    return this.userRepository.find();
+ async getAllUsers() {
+    return await this.userRepository.find();
   }
 
     async updateUser(id: number, attrs: Partial<Users>)  {
