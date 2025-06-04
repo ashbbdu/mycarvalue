@@ -4,14 +4,15 @@ import { CreateUserDto } from './dtos/create-user';
 import { Users } from './users.entity';
 import { Serialize, SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user-dto';
+import { AuthService } from './auth.service';
 
 @Serialize(UserDto) // will be applied to all the routes
 @Controller('auth')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UsersService , private readonly authService : AuthService) {}
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    return this.userService.createUser(body);
+    return this.authService.signup(body);
   }
   @Get('/finduser/:email')
   findUsers(@Param('email') email: string) {
