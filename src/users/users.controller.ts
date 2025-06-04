@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, Put , UseInterceptors , Cla
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user';
 import { Users } from './users.entity';
-import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
+import { Serialize, SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
+import { UserDto } from './dtos/user-dto';
 
+@Serialize(UserDto) // will be applied to all the routes
 @Controller('auth')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
@@ -19,7 +21,8 @@ export class UsersController {
   }
   @Get('/users')
 //   @UseInterceptors(ClassSerializerInterceptor)
-  @UseInterceptors(SerializeInterceptor)
+  // @UseInterceptors(new SerializeInterceptor(UserDto))
+  // @Serialize(UserDto) //custome serializer
   getAllUsers() {
     return this.userService.getAllUsers();
   }

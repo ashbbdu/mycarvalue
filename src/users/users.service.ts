@@ -28,10 +28,7 @@ export class UsersService {
   }
 
     async updateUser(id: number, attrs: Partial<Users>)  {
-        console.log(id , "id");
-        
         const user = await this.userRepository.findOneBy({id});
-        console.log(user , "up")
         if (!user) {
              throw new HttpException('User not found', HttpStatus.NOT_FOUND);;
         }
