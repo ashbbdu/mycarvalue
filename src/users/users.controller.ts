@@ -37,4 +37,9 @@ export class UsersController {
   removeuser(@Param('id') id : number) {
     return this.userService.removeuser(id);
   }
+
+  @Post("/signin")
+  signin(@Body() body : any) {
+    return this.authService.signin(body);
+  }
 }
